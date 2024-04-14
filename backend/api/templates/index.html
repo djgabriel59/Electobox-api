@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+  {% block content %}
+<ul>
+  <!-- Iterate over object_list -->
+  {% for object in object_list %}
+  <!-- Display Objects -->
+  <li>{{ object.qr_data }}</li>
+  <li>{{ object.qr_type }}</li>
+  <li>{{ object.creator }}</li>
+  <li>{{ object.created_at }}</li>
+    <img src="{{ object.qr_image.url }}"/>
+
+  <br />
+  <!-- If object_list is empty  -->
+  {% empty %}
+  <li>No objects yet.</li>
+  {% endfor %}
+</ul>
+</br>
+    <h1>Generate QR Code</h1>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %} {{form|crispy}}
+      <button type="submit">Generate QR Code</button>
+    </form>
+    {% endblock %}
